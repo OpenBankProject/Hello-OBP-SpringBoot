@@ -1,8 +1,7 @@
-package com.tesobe.obp.account;
+package com.tesobe.obp.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.tesobe.obp.MoneyJson;
 import lombok.Data;
 import org.joda.money.Money;
 

@@ -1,4 +1,4 @@
-package com.tesobe.obp;
+package com.tesobe.obp.domain;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;

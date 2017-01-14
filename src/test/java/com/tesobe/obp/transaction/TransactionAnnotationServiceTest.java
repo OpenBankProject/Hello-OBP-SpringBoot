@@ -1,16 +1,16 @@
 package com.tesobe.obp.transaction;
 
 import com.tesobe.obp.AbstractTestSupport;
-import com.tesobe.obp.ObpApiClient;
-import com.tesobe.obp.account.Account;
-import com.tesobe.obp.account.Transaction;
+import com.tesobe.obp.api.ObpApiClient;
+import com.tesobe.obp.domain.Account;
+import com.tesobe.obp.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.tesobe.obp.account.Transaction.Tag;
+import static com.tesobe.obp.domain.Transaction.Tag;
 
 public class TransactionAnnotationServiceTest extends AbstractTestSupport {
     @Autowired private ObpApiClient obpApiClient;

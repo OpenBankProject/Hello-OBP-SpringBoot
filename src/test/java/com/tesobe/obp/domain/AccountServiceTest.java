@@ -1,7 +1,7 @@
-package com.tesobe.obp.account;
+package com.tesobe.obp.domain;
 
 import com.tesobe.obp.AbstractTestSupport;
-import com.tesobe.obp.ObpApiClient;
+import com.tesobe.obp.api.ObpApiClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.tesobe.obp;
+package com.tesobe.obp.api;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

@@ -1,4 +1,4 @@
-package com.tesobe.obp.account;
+package com.tesobe.obp.domain;
 
 import lombok.Data;
 

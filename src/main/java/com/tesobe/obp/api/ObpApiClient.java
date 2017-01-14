@@ -1,10 +1,8 @@
-package com.tesobe.obp;
+package com.tesobe.obp.api;
 
-import com.tesobe.obp.account.Account;
-import com.tesobe.obp.account.Transaction;
-import com.tesobe.obp.account.Transactions;
-import feign.Headers;
-import feign.Param;
+import com.tesobe.obp.domain.Account;
+import com.tesobe.obp.domain.Transaction;
+import com.tesobe.obp.domain.Transactions;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

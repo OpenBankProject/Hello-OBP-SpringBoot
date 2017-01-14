@@ -1,6 +1,6 @@
-package com.tesobe.obp;
+package com.tesobe.obp.api;
 
-import com.tesobe.obp.account.Token;
+import com.tesobe.obp.domain.Token;
 import lombok.val;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
