@@ -1,6 +1,5 @@
 package com.tesobe.obp;
 
-import com.tesobe.obp.auth.DirectAuthenticationService;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,13 @@ public abstract class AbstractTestSupport {
     @Value("${obp.password}")
     private String password;
 
-    @Autowired
-    private DirectAuthenticationService directAuthenticationService;
+    @Value("${obp.consumerKey}")
+    private String consumerKey;
+
+    @Autowired private DirectAuthenticationClient authClient;
 
     @Before
     public void init() {
-        authToken = directAuthenticationService.login(username, password);
+        authClient.login(username, password, consumerKey);
     }
 }

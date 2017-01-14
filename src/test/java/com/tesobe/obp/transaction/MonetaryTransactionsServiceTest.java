@@ -1,8 +1,8 @@
 package com.tesobe.obp.transaction;
 
 import com.tesobe.obp.AbstractTestSupport;
+import com.tesobe.obp.ObpApiClient;
 import com.tesobe.obp.account.Account;
-import com.tesobe.obp.account.AccountService;
 import com.tesobe.obp.account.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,15 +17,14 @@ import java.util.List;
 @SpringBootTest
 public class MonetaryTransactionsServiceTest extends AbstractTestSupport {
 
-    @Autowired private AccountService accountService;
-    @Autowired private MonetaryTransactionsService monetaryTransactionsService;
+    @Autowired private ObpApiClient obpApiClient;
 
     @Test
     public void fetchTransactionListOk() throws Exception {
-        List<Account> accounts = accountService.fetchPrivateAccounts(authToken, false);
+        List<Account> accounts = obpApiClient.getPrivateAccountsNoDetails();
         Assert.assertTrue(accounts.size() > 0);
 
-        List<Transaction> transactions = monetaryTransactionsService.fetchTransactionList(authToken, accounts.get(0));
+        List<Transaction> transactions = obpApiClient.getTransactionsForAccount(accounts.get(0).getBankId(), accounts.get(0).getId()).getTransactions();
         Assert.assertTrue(transactions.size() > 0);
     }
 
