@@ -16,8 +16,11 @@ This is an OBP Client API using Spring Boot 1.4.x.
  
 ## Dependencies
  
- The single dependency is on a live OBP sandbox that needs to run in order for the tested functionality to be successful. This sample project is using the version 2.2.0 of the OBP API. It shouldn't be difficult to use a different API version with the caveat that some of the entities must be adapted to match the data in the target API version.
- Internally, the project is using Lombok to simplify the code and the Joda Money API for representing monetary values. 
+The single external dependency is on a live OBP sandbox that needs to run in order for the tested functionality to be successful. This sample project is using the version 2.2.0 of the OBP API. It shouldn't be difficult to use a different API version with the caveat that some of the entities must be adapted to match the data in the target API version.
+ 
+The OBP client API is abstracted via [Feign](http://projects.spring.io/spring-cloud/spring-cloud.html#spring-cloud-feign), a declarative REST client. See [ObpApiClient](src/main/java/com/tesobe/obp/api/ObpApiClient.java) and [DirectAuthenticationClient](src/main/java/com/tesobe/obp/api/DirectAuthenticationClient.java) for implementation details.
+ 
+Internally, the project is also using Lombok to simplify the code and the Joda Money API for representing monetary values. 
  
 ## Test
  
