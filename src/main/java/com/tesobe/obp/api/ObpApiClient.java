@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @FeignClient(name="account", url="${obp.api.versionedUrl}")
 public interface ObpApiClient {
 
+    //tag::my-account[]
     @RequestMapping(method = RequestMethod.GET, value = "my/accounts")
     List<Account> getPrivateAccountsNoDetails();
 
@@ -33,7 +34,15 @@ public interface ObpApiClient {
     @RequestMapping(method = RequestMethod.GET, value = "banks/{bankId}/accounts/{accountId}/owner/transactions/{transactionId}/transaction")
     Transaction getTransactionById(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
                                    @PathVariable("transactionId") String transactionId);
+    //end::my-account[]
 
+    //tag::public-accounts[]
+    @RequestMapping(method = RequestMethod.GET, value = "accounts")
+    List<Account> getAllPublicAccountsAtAllBanks();
+
+    //end::public-accounts[]
+
+    //tag::tx-metadata[]
     @RequestMapping(method = RequestMethod.POST, value = "banks/{bankId}/accounts/{accountId}/owner/transactions/{transactionId}/metadata/tags")
     Transaction.Tag addTag(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
                            @PathVariable("transactionId") String transactionId, @RequestBody Transaction.Tag tag);
@@ -49,6 +58,7 @@ public interface ObpApiClient {
     @RequestMapping(method = RequestMethod.DELETE, value = "banks/{bankId}/accounts/{accountId}/owner/transactions/{transactionId}/metadata/where")
     void deleteLocation(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
                    @PathVariable("transactionId") String transactionId);
+    //end::tx-metadata[]
 
     @Data
     class Transactions {
