@@ -58,7 +58,7 @@ public class Transaction {
         private List<Object> images;
 
         @JsonProperty("where")
-        private String location;
+        private Object location;
     }
 
     @Data
