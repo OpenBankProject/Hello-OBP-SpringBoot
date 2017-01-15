@@ -1,8 +1,11 @@
 package com.tesobe.obp.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tesobe.obp.domain.Account;
 import com.tesobe.obp.domain.Transaction;
-import com.tesobe.obp.domain.Transactions;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,4 +41,24 @@ public interface ObpApiClient {
     @RequestMapping(method = RequestMethod.DELETE, value = "banks/{bankId}/accounts/{accountId}/owner/transactions/{transactionId}/metadata/tags/{tagId}")
     void deleteTag(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
                    @PathVariable("transactionId") String transactionId, @PathVariable("tagId") String tagId);
+
+    @RequestMapping(method = RequestMethod.POST, value = "banks/{bankId}/accounts/{accountId}/owner/transactions/{transactionId}/metadata/where")
+    void addLocation(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
+                           @PathVariable("transactionId") String transactionId, @RequestBody Where location);
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "banks/{bankId}/accounts/{accountId}/owner/transactions/{transactionId}/metadata/where")
+    void deleteLocation(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
+                   @PathVariable("transactionId") String transactionId);
+
+    @Data
+    class Transactions {
+        private List<Transaction> transactions;
+    }
+
+    @Data
+    @NoArgsConstructor @AllArgsConstructor
+    class Where {
+        @JsonProperty("where")
+        private Transaction.Location location;
+    }
 }

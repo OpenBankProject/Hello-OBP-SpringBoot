@@ -13,6 +13,7 @@ This is an OBP Client API using Spring Boot 1.4.x.
   - Get account details
   - Get transactions for an account
   - Tag transactions
+  - Add geolocation to transaction
  
 ## Dependencies
  
