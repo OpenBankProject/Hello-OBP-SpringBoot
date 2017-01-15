@@ -1,10 +1,9 @@
 package com.tesobe.obp.transaction;
 
 import com.tesobe.obp.AbstractTestSupport;
-import com.tesobe.obp.api.ObpApiClient;
+import com.tesobe.obp.clientapi.ObpApiClient;
 import com.tesobe.obp.domain.Account;
-import static com.tesobe.obp.domain.Transaction.*;
-
+import com.tesobe.obp.domain.Location;
 import com.tesobe.obp.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,7 +57,7 @@ public class TransactionAnnotationServiceTest extends AbstractTestSupport {
 
         Transaction tx = transactions.get(0);
 
-        Location geoLocation = new Transaction.Location(12.566331, 55.675313);
+        Location geoLocation = new Location(12.566331, 55.675313);
         obpApiClient.addLocation(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new ObpApiClient.Where(geoLocation));
         Location txLocation = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getLocation();
         Assert.assertEquals(geoLocation, txLocation);
@@ -72,7 +71,7 @@ public class TransactionAnnotationServiceTest extends AbstractTestSupport {
         Transaction tx = transactions.get(0);
 
         //add location to transaction
-        Location geoLocation = new Transaction.Location(12.566331, 55.675313);
+        Location geoLocation = new Location(12.566331, 55.675313);
         obpApiClient.addLocation(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new ObpApiClient.Where(geoLocation));
         Location txLocation = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getLocation();
         Assert.assertEquals(geoLocation, txLocation);

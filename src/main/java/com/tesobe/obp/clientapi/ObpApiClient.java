@@ -1,13 +1,17 @@
-package com.tesobe.obp.api;
+package com.tesobe.obp.clientapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tesobe.obp.domain.Account;
+import com.tesobe.obp.domain.Location;
 import com.tesobe.obp.domain.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,6 +73,6 @@ public interface ObpApiClient {
     @NoArgsConstructor @AllArgsConstructor
     class Where {
         @JsonProperty("where")
-        private Transaction.Location location;
+        private Location location;
     }
 }

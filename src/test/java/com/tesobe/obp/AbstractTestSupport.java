@@ -1,6 +1,6 @@
 package com.tesobe.obp;
 
-import com.tesobe.obp.api.DirectAuthenticationClient;
+import com.tesobe.obp.clientapi.DirectAuthenticationClient;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

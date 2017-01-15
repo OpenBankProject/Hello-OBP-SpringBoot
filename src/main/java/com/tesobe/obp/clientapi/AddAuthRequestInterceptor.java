@@ -1,4 +1,4 @@
-package com.tesobe.obp.api;
+package com.tesobe.obp.clientapi;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -18,6 +18,7 @@ public class AddAuthRequestInterceptor implements RequestInterceptor {
         if(directLoginPath.equals(template.url())) {
             return;
         }
+        if(SecurityContextHolder.getContext().getAuthentication() == null) return;
 
         String authToken = (String) SecurityContextHolder.getContext()
                 .getAuthentication().getCredentials();

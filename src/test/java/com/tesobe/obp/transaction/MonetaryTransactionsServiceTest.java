@@ -1,7 +1,7 @@
 package com.tesobe.obp.transaction;
 
 import com.tesobe.obp.AbstractTestSupport;
-import com.tesobe.obp.api.ObpApiClient;
+import com.tesobe.obp.clientapi.ObpApiClient;
 import com.tesobe.obp.domain.Account;
 import com.tesobe.obp.domain.Transaction;
 import org.junit.Assert;

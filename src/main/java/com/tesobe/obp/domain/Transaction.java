@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.tesobe.obp.Application;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.money.Money;
@@ -88,13 +87,6 @@ public class Transaction {
             result = 31 * result + id.hashCode();
             return result;
         }
-    }
-
-    @Data
-    @NoArgsConstructor @AllArgsConstructor
-    public static class Location {
-        private double latitude;
-        private double longitude;
     }
 
     @Data

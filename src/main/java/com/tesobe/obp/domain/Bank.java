@@ -3,6 +3,8 @@ package com.tesobe.obp.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Bank {
     private String id;
@@ -13,4 +15,6 @@ public class Bank {
     @JsonProperty("logo_URL")
     private String logoUrl;
     private String website;
+
+    private List<Branch> branches;
 }

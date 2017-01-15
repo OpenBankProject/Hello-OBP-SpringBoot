@@ -14,7 +14,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: "io.spring.dependency-management"
 
 jar {
-    baseName = 'obp-api-client'
+    baseName = 'obp-clientapi-client'
     version =  '1.0.0'
 }
 

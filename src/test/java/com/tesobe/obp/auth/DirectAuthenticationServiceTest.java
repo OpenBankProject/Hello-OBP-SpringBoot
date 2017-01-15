@@ -1,6 +1,6 @@
 package com.tesobe.obp.auth;
 
-import com.tesobe.obp.api.DirectAuthenticationClient;
+import com.tesobe.obp.clientapi.DirectAuthenticationClient;
 import feign.FeignException;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;

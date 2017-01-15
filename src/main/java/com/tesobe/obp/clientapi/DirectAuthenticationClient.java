@@ -1,4 +1,4 @@
-package com.tesobe.obp.api;
+package com.tesobe.obp.clientapi;
 
 import com.tesobe.obp.domain.Token;
 import lombok.val;
