@@ -2,6 +2,7 @@ package com.tesobe.obp.domain;
 
 import com.tesobe.obp.AbstractTestSupport;
 import com.tesobe.obp.clientapi.ObpApiClient;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,13 @@ public class AccountServiceTest extends AbstractTestSupport {
         List<Account> privateAccounts = obpApiClient.getPrivateAccountsWithDetails();
         assertTrue(privateAccounts.size() > 0);
         privateAccounts.forEach(privateAccount -> assertNotNull(privateAccount.getBalance()));
+    }
+
+    @Test
+    public void accountViewsOk() throws Exception {
+        List<Account> privateAccounts = obpApiClient.getPrivateAccountsNoDetails();
+        Account firstAccount = privateAccounts.get(0);
+        ObpApiClient.AccountViews views = obpApiClient.getViewsForAccount(firstAccount.getBankId(), firstAccount.getId());
+        Assert.assertNotNull(views);
     }
 }

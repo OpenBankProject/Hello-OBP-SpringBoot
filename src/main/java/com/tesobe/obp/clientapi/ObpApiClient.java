@@ -1,9 +1,7 @@
 package com.tesobe.obp.clientapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tesobe.obp.domain.Account;
-import com.tesobe.obp.domain.Location;
-import com.tesobe.obp.domain.Transaction;
+import com.tesobe.obp.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +29,9 @@ public interface ObpApiClient {
     @RequestMapping(method = RequestMethod.GET, value = "my/banks/{bankId}/accounts/{accountId}/account")
     Account getAccount(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId);
 
+    @RequestMapping(method = RequestMethod.GET, value = "banks/{bankId}/accounts/{accountId}/views")
+    AccountViews getViewsForAccount(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId);
+
     @RequestMapping(method = RequestMethod.GET, value = "banks/{bankId}/accounts/{accountId}/owner/transactions")
     Transactions getTransactionsForAccount(@PathVariable("bankId") String bankId,
                                            @PathVariable("accountId") String accountId);
@@ -38,7 +39,17 @@ public interface ObpApiClient {
     @RequestMapping(method = RequestMethod.GET, value = "banks/{bankId}/accounts/{accountId}/owner/transactions/{transactionId}/transaction")
     Transaction getTransactionById(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
                                    @PathVariable("transactionId") String transactionId);
+
+    @RequestMapping(method = RequestMethod.GET, value = "banks/{bankId}/accounts/{accountId}/owner/transactions")
+    String transferMoney(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId, @RequestBody TransactionRequest transfer);
     //end::my-account[]
+
+    @RequestMapping(method = RequestMethod.GET, value = "banks/{bankId}/accounts/{accountId}/owner/transaction-request-types")
+    TransactionRequestTypes getTransactionTypes(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId);
+
+    @RequestMapping(method = RequestMethod.POST, value = "banks/{bankId}/accounts/{accountId}/owner/transaction-request-types/{transactionReqType}/transaction-requests")
+    String initiateTransaction(@PathVariable("bankId") String bankId, @PathVariable("accountId") String accountId,
+                               @PathVariable("transactionReqType") String transactionReqType, @RequestBody TransactionRequest txRequest);
 
     //tag::public-accounts[]
     @RequestMapping(method = RequestMethod.GET, value = "accounts")
@@ -74,5 +85,16 @@ public interface ObpApiClient {
     class Where {
         @JsonProperty("where")
         private Location location;
+    }
+
+    @Data
+    class TransactionRequestTypes {
+        @JsonProperty("transaction_request_types")
+        private List<TransactionRequestType> transactionRequests;
+    }
+
+    @Data
+    class AccountViews {
+        private List<AccountView> views;
     }
 }
