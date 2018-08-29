@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name="account", url="${obp.api.rootUrl}")
 public interface DirectAuthenticationClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "${obp.api.directLoginPath}")
+    @RequestMapping(method = RequestMethod.POST, value = "${obp.api.directLoginPath}")
     Token loginInternal(@RequestHeader("Authorization") String authHeader);
 
     default String login(String username, String password, String consumerKey) {
-        val dlData = String.format("DirectLogin username=%s,password=%s,consumer_key=%s", username, password, consumerKey);
+        val dlData = String.format("DirectLogin username=\"%s\",password=\"%s\",consumer_key=\"%s\"", username, password, consumerKey);
         val token = loginInternal(dlData).getToken();
         val authentication = new UsernamePasswordAuthenticationToken(username, token);
         SecurityContextHolder.getContext().setAuthentication(authentication);

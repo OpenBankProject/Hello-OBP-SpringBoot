@@ -39,7 +39,12 @@ public class DirectAuthenticationServiceTest {
         try {
             directAuthenticationClient.login(username, password, "garble");
         } catch (Exception ex) {
-            Assert.assertEquals(HttpStatus.SC_UNAUTHORIZED, ((FeignException)ex.getCause().getCause()).status());
+            Throwable ex2 = ex;
+            while (ex2 != null && !(ex2 instanceof FeignException)) {
+                ex2 = ex2.getCause();
+            }
+            Assert.assertNotNull("There should be a FeignException in the exception cause chain, but was " + ex, ex);
+            Assert.assertEquals(HttpStatus.SC_UNAUTHORIZED, (FeignException) ex);
             return;
         }
         Assert.assertFalse("Should have gotten 401 exception", true);

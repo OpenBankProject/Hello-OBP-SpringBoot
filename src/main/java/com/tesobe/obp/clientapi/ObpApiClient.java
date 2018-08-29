@@ -19,10 +19,10 @@ public interface ObpApiClient {
 
     //tag::my-account[]
     @RequestMapping(method = RequestMethod.GET, value = "my/accounts")
-    List<Account> getPrivateAccountsNoDetails();
+    Accounts getPrivateAccountsNoDetails();
 
     default List<Account> getPrivateAccountsWithDetails() {
-        List<Account> accountsNoDetails = getPrivateAccountsNoDetails();
+        List<Account> accountsNoDetails = getPrivateAccountsNoDetails().getAccounts();
         return accountsNoDetails.stream().map(account -> getAccount(account.getBankId(), account.getId())).collect(Collectors.toList());
     }
 
@@ -96,5 +96,10 @@ public interface ObpApiClient {
     @Data
     class AccountViews {
         private List<AccountView> views;
+    }
+
+    @Data
+    class Accounts {
+        private List<Account> accounts;
     }
 }

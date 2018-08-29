@@ -25,7 +25,7 @@ public class MonetaryTransactionsServiceTest extends AbstractTestSupport {
 
     @Test
     public void fetchTransactionListOk() throws Exception {
-        List<Account> accounts = obpApiClient.getPrivateAccountsNoDetails();
+        List<Account> accounts = obpApiClient.getPrivateAccountsNoDetails().getAccounts();
         Assert.assertTrue(accounts.size() > 0);
 
         String bankId = accounts.get(0).getBankId();

@@ -23,7 +23,7 @@ public class AccountServiceTest extends AbstractTestSupport {
     @Test
     public void fetchPrivateAccountsNoDetailsOk() {
         //fetch private accounts
-        List<Account> privateAccounts = obpApiClient.getPrivateAccountsNoDetails();
+        List<Account> privateAccounts = obpApiClient.getPrivateAccountsNoDetails().getAccounts();
         assertTrue(privateAccounts.size() > 0);
     }
 
@@ -37,7 +37,7 @@ public class AccountServiceTest extends AbstractTestSupport {
 
     @Test
     public void accountViewsOk() throws Exception {
-        List<Account> privateAccounts = obpApiClient.getPrivateAccountsNoDetails();
+        List<Account> privateAccounts = obpApiClient.getPrivateAccountsNoDetails().getAccounts();
         Account firstAccount = privateAccounts.get(0);
         ObpApiClient.AccountViews views = obpApiClient.getViewsForAccount(firstAccount.getBankId(), firstAccount.getId());
         Assert.assertNotNull(views);
