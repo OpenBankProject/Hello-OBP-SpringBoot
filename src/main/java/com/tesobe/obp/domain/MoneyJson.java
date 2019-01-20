@@ -26,19 +26,6 @@ public class MoneyJson {
         }
     }
 
-    public static final MoneyFormatter MONEY_FORMATTER = new MoneyFormatterBuilder()
-            .appendCurrencyCode()
-            .appendLiteral(" ")
-            .appendAmountLocalized()
-            .toFormatter();
-
-//    public static class MoneyDeserializer extends JsonDeserializer<Money> {
-//        @Override
-//        public Money deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-//            final String moneyStr = jp.getValueAsString();
-//            return MONEY_FORMATTER.withLocale(LocaleContextHolder.getLocale()).parseMoney(moneyStr);
-//        }
-//    }
     public static class MoneySerializer extends JsonObjectSerializer<Money> {
     @Override
     protected void serializeObject(Money money, JsonGenerator jgen, SerializerProvider provider) throws IOException {

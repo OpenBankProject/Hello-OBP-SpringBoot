@@ -25,7 +25,7 @@ public class TransactionAnnotationServiceTest extends AbstractTestSupport {
         Transaction tx = transactions.get(0);
 
         String tagValue = "food";
-        Tag tag = obpApiClient.addTag(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new Tag(tagValue));
+        Tag tag = obpApiClient.tagTransaction(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new Tag(tagValue));
         Assert.assertNotNull(tag.getId());
         Assert.assertEquals(tagValue, tag.getValue());
         List<Tag> newTags = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getTags();
@@ -39,12 +39,12 @@ public class TransactionAnnotationServiceTest extends AbstractTestSupport {
         List<Transaction> transactions = obpApiClient.getTransactionsForAccount(ownAccount.getBankId(), ownAccount.getId()).getTransactions();
 
         Transaction tx = transactions.get(0);
-        //tx.getMetadata().getTags().forEach(tag -> transactionAnnotationService.deleteTag(authToken, tx, tag));
-        Tag tag = obpApiClient.addTag(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new Tag("food"));
+        //tx.getMetadata().getTags().forEach(tag -> transactionAnnotationService.deleteTransactionTag(authToken, tx, tag));
+        Tag tag = obpApiClient.tagTransaction(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new Tag("food"));
         List<Tag> txTags = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getTags();
         Assert.assertTrue(txTags.contains(tag));
 
-        obpApiClient.deleteTag(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), tag.getId());
+        obpApiClient.deleteTransactionTag(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), tag.getId());
         txTags = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getTags();
         Assert.assertTrue(!txTags.contains(tag));
     }

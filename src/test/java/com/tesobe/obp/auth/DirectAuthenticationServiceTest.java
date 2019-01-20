@@ -2,17 +2,19 @@ package com.tesobe.obp.auth;
 
 import com.tesobe.obp.clientapi.DirectAuthenticationClient;
 import feign.FeignException;
-import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource(locations = {"classpath:auth.properties"})
 public class DirectAuthenticationServiceTest {
 
     @Value("${obp.username}")
@@ -39,7 +41,7 @@ public class DirectAuthenticationServiceTest {
         try {
             directAuthenticationClient.login(username, password, "garble");
         } catch (Exception ex) {
-            Assert.assertEquals(HttpStatus.SC_UNAUTHORIZED, ((FeignException)ex.getCause().getCause()).status());
+            Assert.assertEquals(HttpStatus.UNAUTHORIZED.value(), ((FeignException)ex).status());
             return;
         }
         Assert.assertFalse("Should have gotten 401 exception", true);
