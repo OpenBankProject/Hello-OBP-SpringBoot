@@ -2,7 +2,7 @@
 This is a technology demonstration of the OBP API capabilities. It puts all available bank branches in the `https://apisandbox.openbankproject.com` sandbox on a map.
 The OBP Client API is using Spring Boot 2.1.x and needs JDK 10.
 
-![](./branches-overlay.png =300x)
+![](./branches-overlay.png)
 
 ## Setup and run
 Sign-up at the OBP sandbox: https://apisandbox.openbankproject.com/ Note the consumer key, username and password.
