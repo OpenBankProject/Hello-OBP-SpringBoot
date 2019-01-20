@@ -1,0 +1,34 @@
+<html><body>
+  <div id="mapdiv"></div>
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <div ng-app="myApp" ng-controller="myCtrl"> 
+  <script>
+    map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+    
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+      $http.get("/branches")
+      .then(function(response) {
+        response.data.map(function(branch) {
+            var lonLat = new OpenLayers.LonLat(branch.location.longitude, branch.location.latitude)
+                  .transform(
+                    new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                    map.getProjectionObject() // to Spherical Mercator Projection
+                  );
+            markers.addMarker(new OpenLayers.Marker(lonLat));
+        });
+      });
+    });
+    var lonLat = new OpenLayers.LonLat(26.587162, 63.863719)
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+    map.setCenter (lonLat, 6);
+  </script>
+</body></html>
+

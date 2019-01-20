@@ -1,53 +1,86 @@
 package com.tesobe.obp.transaction;
 
 import com.tesobe.obp.AbstractTestSupport;
-import com.tesobe.obp.account.Account;
-import com.tesobe.obp.account.AccountService;
-import com.tesobe.obp.account.Transaction;
+import com.tesobe.obp.clientapi.ObpApiClient;
+import com.tesobe.obp.domain.Account;
+import com.tesobe.obp.domain.Location;
+import com.tesobe.obp.domain.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.tesobe.obp.account.Transaction.Tag;
+import static com.tesobe.obp.domain.Transaction.Tag;
 
 public class TransactionAnnotationServiceTest extends AbstractTestSupport {
-    @Autowired private AccountService accountService;
-    @Autowired private MonetaryTransactionsService monetaryTransactionsService;
-    @Autowired private TransactionAnnotationService transactionAnnotationService;
+    @Autowired private ObpApiClient obpApiClient;
 
     @Test
     public void addTagOk() {
-        List<Account> accounts = accountService.fetchPrivateAccounts(authToken, true);
+        List<Account> accounts = obpApiClient.getPrivateAccountsWithDetails();
         Account ownAccount = accounts.get(0);
-        List<Transaction> transactions = monetaryTransactionsService.fetchTransactionList(authToken, ownAccount);
+        List<Transaction> transactions = obpApiClient.getTransactionsForAccount(ownAccount.getBankId(), ownAccount.getId()).getTransactions();
 
         Transaction tx = transactions.get(0);
 
         String tagValue = "food";
-        Tag tag = transactionAnnotationService.addTag(authToken, tx, tagValue);
+        Tag tag = obpApiClient.addTag(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new Tag(tagValue));
         Assert.assertNotNull(tag.getId());
         Assert.assertEquals(tagValue, tag.getValue());
-        List<Tag> newTags = monetaryTransactionsService.getTransactionById(authToken, ownAccount, tx.getId()).getMetadata().getTags();
+        List<Tag> newTags = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getTags();
         Assert.assertTrue(newTags.contains(tag));
     }
 
     @Test
     public void deleteTagOk() {
-        List<Account> accounts = accountService.fetchPrivateAccounts(authToken, true);
+        List<Account> accounts = obpApiClient.getPrivateAccountsWithDetails();
         Account ownAccount = accounts.get(0);
-        List<Transaction> transactions = monetaryTransactionsService.fetchTransactionList(authToken, ownAccount);
+        List<Transaction> transactions = obpApiClient.getTransactionsForAccount(ownAccount.getBankId(), ownAccount.getId()).getTransactions();
 
         Transaction tx = transactions.get(0);
         //tx.getMetadata().getTags().forEach(tag -> transactionAnnotationService.deleteTag(authToken, tx, tag));
-        Tag tag = transactionAnnotationService.addTag(authToken, tx, "food");
-        List<Tag> txTags = monetaryTransactionsService.getTransactionById(authToken, ownAccount, tx.getId()).getMetadata().getTags();
+        Tag tag = obpApiClient.addTag(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new Tag("food"));
+        List<Tag> txTags = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getTags();
         Assert.assertTrue(txTags.contains(tag));
 
-        transactionAnnotationService.deleteTag(authToken, tx, tag);
-        txTags = monetaryTransactionsService.getTransactionById(authToken, ownAccount, tx.getId()).getMetadata().getTags();
+        obpApiClient.deleteTag(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), tag.getId());
+        txTags = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getTags();
         Assert.assertTrue(!txTags.contains(tag));
+    }
+
+    @Test
+    public void addLocationOk() {
+        List<Account> accounts = obpApiClient.getPrivateAccountsWithDetails();
+        Account ownAccount = accounts.get(0);
+        List<Transaction> transactions = obpApiClient.getTransactionsForAccount(ownAccount.getBankId(), ownAccount.getId()).getTransactions();
+
+        Transaction tx = transactions.get(0);
+
+        Location geoLocation = new Location(12.566331, 55.675313);
+        obpApiClient.addLocation(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new ObpApiClient.Where(geoLocation));
+        Location txLocation = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getLocation();
+        Assert.assertEquals(geoLocation, txLocation);
+    }
+
+    @Test
+    public void deleteLocationOk() {
+        List<Account> accounts = obpApiClient.getPrivateAccountsWithDetails();
+        Account ownAccount = accounts.get(0);
+        List<Transaction> transactions = obpApiClient.getTransactionsForAccount(ownAccount.getBankId(), ownAccount.getId()).getTransactions();
+        Transaction tx = transactions.get(0);
+
+        //add location to transaction
+        Location geoLocation = new Location(12.566331, 55.675313);
+        obpApiClient.addLocation(ownAccount.getBankId(), ownAccount.getId(), tx.getId(), new ObpApiClient.Where(geoLocation));
+        Location txLocation = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getLocation();
+        Assert.assertEquals(geoLocation, txLocation);
+
+        //delete location
+        obpApiClient.deleteLocation(ownAccount.getBankId(), ownAccount.getId(), tx.getId());
+        //check null location
+        txLocation = obpApiClient.getTransactionById(ownAccount.getBankId(), ownAccount.getId(), tx.getId()).getMetadata().getLocation();
+        Assert.assertNull(txLocation);
     }
 
 }

@@ -1,10 +1,9 @@
-package com.tesobe.obp.account;
+package com.tesobe.obp.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.tesobe.obp.Application;
-import com.tesobe.obp.MoneyJson;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.money.Money;
@@ -54,10 +53,10 @@ public class Transaction {
         private String narrative;
         private List<Object> comments;
         private List<Tag> tags;
-        private List<Object> images;
+        private List<Image> images;
 
         @JsonProperty("where")
-        private Object location;
+        private Location location;
     }
 
     @Data
@@ -88,5 +87,11 @@ public class Transaction {
             result = 31 * result + id.hashCode();
             return result;
         }
+    }
+
+    @Data
+    public static class Image {
+        @JsonProperty("image_URL")
+        private String imageUrl;
     }
 }
