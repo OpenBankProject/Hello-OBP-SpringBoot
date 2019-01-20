@@ -9,8 +9,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AddAuthRequestInterceptor implements RequestInterceptor {
-    @Value("${obp.api.directLoginPath}")
     private String directLoginPath;
+    private String username;
+    private String password;
+    private String consumerKey;
+    DirectAuthenticationClient directAuthenticationClient;
+
+    public AddAuthRequestInterceptor(DirectAuthenticationClient directAuthenticationClient,
+                                     @Value("${obp.api.directLoginPath}") String directLoginPath,
+                                     @Value("${obp.username}") String username,
+                                     @Value("${obp.password}") String password,
+                                     @Value("${obp.consumerKey}") String consumerKey) {
+
+        this.directLoginPath = directLoginPath;
+        this.username = username;
+        this.password = password;
+        this.consumerKey = consumerKey;
+        this.directAuthenticationClient = directAuthenticationClient;
+    }
 
     @Override
     public void apply(RequestTemplate template) {
@@ -18,7 +34,10 @@ public class AddAuthRequestInterceptor implements RequestInterceptor {
         if(directLoginPath.equals(template.url())) {
             return;
         }
-        if(SecurityContextHolder.getContext().getAuthentication() == null) return;
+        if(SecurityContextHolder.getContext().getAuthentication() == null) {
+            String f = directAuthenticationClient.login(username, password, consumerKey);
+            int t=0;
+        }
 
         String authToken = (String) SecurityContextHolder.getContext()
                 .getAuthentication().getCredentials();
