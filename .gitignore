@@ -2,3 +2,5 @@ build
 .idea
 .gradle
 .eclipse
+classes
+out

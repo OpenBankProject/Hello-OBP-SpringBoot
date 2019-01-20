@@ -1,16 +1,18 @@
 buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+    }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 jar {
     baseName = 'obp-api-client'
@@ -21,13 +23,14 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_1_10
+targetCompatibility = JavaVersion.VERSION_1_10
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
-    compile('org.joda:joda-money:0.11')
-    compile('org.projectlombok:lombok:1.16.10')
+    compile('org.joda:joda-money:1.0.1')
+    compileOnly('org.projectlombok:lombok')
+
     testCompile("junit:junit")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
