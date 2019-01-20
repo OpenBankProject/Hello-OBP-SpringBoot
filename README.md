@@ -3,7 +3,7 @@ This is a technology demonstration of the OBP API capabilities.
 This project provides Java bindings to sveral OBP REST API endpoints, including banks, branches, accounts and transactions.
 Included is also a demo webpage that puts all available bank branches in the `https://apisandbox.openbankproject.com` sandbox on a map.
 
-![50%](./branches-overlay.png)
+<img src="/branches-overlay.png" width="70%">
 
 ## Setup and run
 The OBP Client API is using Spring Boot 2.1.x and needs JDK 10.
@@ -17,7 +17,7 @@ To login, use the username and password you noted above. After a successful logi
 
 Only a small subset of the full API capabilities are integrated in the webapp (banks, branches). 
 
-# OBP Java API binding
+# OBP Java API bindings
 The OBP REST API is made available as a native Java API by the com.tesobe.obp.clientapi.*ApiClient classes. Accounts and transactions are available as many other OBP API capabilities. See the integration test suite for example usage.
 Caveat: currently, not all of the REST API implemented. 
 
