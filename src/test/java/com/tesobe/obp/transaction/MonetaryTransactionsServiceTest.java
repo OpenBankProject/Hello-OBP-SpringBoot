@@ -35,7 +35,7 @@ public class MonetaryTransactionsServiceTest extends AbstractTestSupport {
         TransactionRequest transactionRequest = new TransactionRequest(
                 new TransactionRequest.DestAccount(bankId, accountIdOne), Money.of(CurrencyUnit.EUR, 5), "some description");
 
-        String result = obpApiClient.initiateTransaction(bankId, accounts.get(1).getId(), "SANDBOX_TAN", transactionRequest);
+        String result = obpApiClient.initiateTransaction(bankId, accounts.get(0).getId(), "SANDBOX_TAN", transactionRequest);
 
         List<Transaction> transactions = obpApiClient.getTransactionsForAccount(bankId, accountIdOne).getTransactions();
         Assert.assertTrue(transactions.size() > 0);
