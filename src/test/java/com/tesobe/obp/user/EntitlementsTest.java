@@ -9,20 +9,16 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class EntitlementsTest extends AbstractTestSupport {
 
-    @Value("${obp.username}")
-    private String user;
-    @Autowired private EntitlementsApiClient entitlementsApiClient;
+	@Value("${obp.username}")
+	private String user;
+	@Autowired
+	private EntitlementsApiClient entitlementsApiClient;
 
-    @Test
-    public void entitlementsUser() throws Exception {
-        try {
+	@Test
+	public void entitlementsUser() throws Exception {
 
-		    		String entz = entitlementsApiClient.getEntitlements(user);
+			String entz = entitlementsApiClient.getEntitlements(user);
 
-		    		Assert.assertNotNull(entz);
-		    	}
-		    	catch (Exception ex) {
-		    		ex.printStackTrace();
-    	}
-    }
+			Assert.assertNotNull(entz);
+	}
 }
