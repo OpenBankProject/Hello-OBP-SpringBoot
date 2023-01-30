@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class ATM {
     private String id;
+    private Location location;
 }
