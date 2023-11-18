@@ -18,8 +18,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BanksController {
 
-    @Autowired
-    private ObpBankMetaApiClient obpBankMetaApiClient;
+     private final ObpBankMetaApiClient obpBankMetaApiClient;
+
+    public BanksController(ObpBankMetaApiClient obpBankMetaApiClient) {
+        this.obpBankMetaApiClient = obpBankMetaApiClient;
+    }
 
     @GetMapping("/branches")
     public List<Branch> allBranches() {
